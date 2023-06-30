@@ -1,0 +1,61 @@
+.todo__table {
+  padding-top: 5rem;
+  max-width: 100rem;
+  margin: auto;
+  
+  .title {
+    display: flex;
+    justify-content: space-between;
+    li {
+      font-size: 1.7rem;
+    }
+  }
+  // ------------ display todo
+  .table_content {
+    display: flex;
+    justify-content: space-between;
+    gap: 3rem;
+    align-items: center;
+    background-color: #70318d;
+    margin-bottom: 2rem;
+    // width: 500px;
+    overflow-x: auto;
+    // height: 4rem;
+    padding: 0 1rem;
+    input,
+    textarea {
+      border: none;
+      background-color: #70318d;
+      width: 100%;
+      color: #fff;
+      //  height: 20rem;
+    }
+    textarea {
+      min-width: 40rem;
+      min-height: 10rem;
+      // height: 100%;
+    }
+    .title_wapper {
+      min-width: 15rem;
+
+    }
+    .date_wapper {
+      display: flex;
+      // max-width: 20rem;
+      min-width: 15rem;
+      // width: 100%;
+      input{
+        color: #000;
+        background-color: #fff;
+        margin-left: 1rem;
+        padding: 1rem 0;
+        text-align: center;
+      }
+    }
+    .tag_wapper {
+      // display: flex;
+      max-width: 30rem;
+      min-width: 15rem;
+    }
+  }
+}
