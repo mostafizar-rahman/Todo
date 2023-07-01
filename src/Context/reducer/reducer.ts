@@ -147,6 +147,7 @@ export const reducer = (state: InitialStateType, action: ActionTypes) => {
         return {
           ...state,
           endMonth: action.paylod,
+          error:""
         };
       }
     case actionTypes.END_YEAR:
@@ -162,6 +163,7 @@ export const reducer = (state: InitialStateType, action: ActionTypes) => {
         return {
           ...state,
           endYear: action.paylod,
+          error:""
         };
       }
 

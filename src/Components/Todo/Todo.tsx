@@ -46,7 +46,9 @@ const Todo = () => {
   // console.log(newTags)
   return (
     <div className="todo__container">
+       <h3 className='title'>ToDo</h3>
       <form onSubmit={handleTodoSubmit} ref={formRef}>
+        <label htmlFor="title">Title</label>
         <input
           placeholder="Title"
           name="title"
@@ -54,6 +56,7 @@ const Todo = () => {
             dispatch({ type: actionTypes.TITLE, paylod: e.target.value })
           }
         />
+        <label htmlFor="details">Details</label>
         <textarea
           placeholder="Details"
           name="details"
@@ -61,6 +64,7 @@ const Todo = () => {
             dispatch({ type: actionTypes.DETAILS, paylod: e.target.value })
           }
         />
+        <label htmlFor="">Tags</label>
         <div className="tag_wapper">
           {newTags.map((tag: any, id: any) => {
             return (

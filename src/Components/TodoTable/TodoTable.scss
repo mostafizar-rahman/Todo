@@ -1,61 +1,118 @@
-.todo__table {
-  padding-top: 5rem;
+.todos__lists {
   max-width: 100rem;
   margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  // justify-self: center;
+  // justify-content: center;
   
-  .title {
-    display: flex;
-    justify-content: space-between;
-    li {
-      font-size: 1.7rem;
-    }
-  }
-  // ------------ display todo
-  .table_content {
-    display: flex;
-    justify-content: space-between;
-    gap: 3rem;
-    align-items: center;
-    background-color: #70318d;
-    margin-bottom: 2rem;
-    // width: 500px;
-    overflow-x: auto;
-    // height: 4rem;
-    padding: 0 1rem;
-    input,
-    textarea {
-      border: none;
-      background-color: #70318d;
-      width: 100%;
-      color: #fff;
-      //  height: 20rem;
-    }
-    textarea {
-      min-width: 40rem;
-      min-height: 10rem;
-      // height: 100%;
-    }
-    .title_wapper {
-      min-width: 15rem;
+  gap: 20px;
+  padding: 1rem;
+  margin-top: 7rem;
 
+  // ------------ Todo item
+  &_item {
+    width: 48%;
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0px 0px 9px 4px rgba($color: #000000, $alpha: 0.5);
+    // transition: all 0.5s;
+    // height: 100%;
+    // align-content: center;
+
+    // ----------- Left Side
+    .left_side {
+      label {
+        margin-top: 2rem;
+        display: block;
+      }
+      input,
+      textarea {
+        border: none;
+        width: 100%;
+        background-color: #e3eef8;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        outline: none;
+      }
+      textarea {
+        min-height: 10rem;
+      }
     }
+
     .date_wapper {
       display: flex;
-      // max-width: 20rem;
-      min-width: 15rem;
-      // width: 100%;
-      input{
+      justify-content: space-between;
+      width: 100%;
+      .date {
+        display: flex;
+      }
+
+      div:first-child {
+        margin-right: 3rem;
+      }
+
+      input {
         color: #000;
-        background-color: #fff;
+        background-color: #e3eef8;
         margin-left: 1rem;
-        padding: 1rem 0;
+        padding: 0.3rem 0;
         text-align: center;
+        width: 100%;
+        &:first-child {
+          margin-left: 0;
+        }
       }
     }
     .tag_wapper {
-      // display: flex;
-      max-width: 30rem;
-      min-width: 15rem;
+      div {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .tag {
+        input {
+          min-width: 4rem;
+          background-color: gold;
+          display: inline;
+          max-height: 1rem;
+          text-align: center;
+          padding: 1rem 0;
+        }
+      }
     }
+
+    // ------------ Right Side
+    .right_side {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+     
+      height: 0rem;
+      // display: none;
+      visibility: hidden;
+      // transition: all 0.5s;
+    }
+    &:hover {
+      display: flex;
+      // transition: all 0.5s;
+    }
+    &:hover .right_side {
+      // display: block;
+      visibility: visible;
+      height:100%;
+      background-color: antiquewhite;
+      // transition: all 0.5s;
+     
+    }
+  }
+
+  .hidden {
+    display: none;
+  }
+  .block {
+    display: block;
   }
 }
