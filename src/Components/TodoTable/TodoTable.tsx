@@ -3,15 +3,17 @@ import {
   deleteTodoLocalstoge,
   editTodoLocalStroge,
   localStorageGetTodo,
-  todoLocalStrogeSetItem,
 } from "../../Utilits/localstroge";
 import "./TodoTable.scss";
 import { TOTO_CONTEXT } from "../../Context/TodoProvider/TodoProvider";
 import { InitialStateType } from "../../Utilits/types";
 
+import deleteButton from "../../assets/icons/delete.png";
+import editButton from "../../assets/icons/editing.png";
+import closeEditButton from "../../assets/icons/close.png";
+
 const TodoTable = () => {
   const [totoList, setTodoList] = useState([]);
-  const [editTodo, setEditTodo] = useState(true);
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [updateTodo, setUpdateTodo] = useState({} as any);
   const { state } = useContext(TOTO_CONTEXT);
@@ -19,37 +21,34 @@ const TodoTable = () => {
 
   useEffect(() => {
     const todos = localStorageGetTodo();
+
+    // First time load localstorge todos list then when add a new todo it load on time
     setTodoList(todos || todoTitems);
   }, [todoTitems]);
 
+  
   const handleUpdateTodoValue = (e: any) => {
     setUpdateTodo({ [e.target.name]: e.target.value });
   };
+
   const handleUpdateTodoSeve = (id: any) => {
     editTodoLocalStroge({ id, updateTodo });
   };
   const handleUpdateTodoTagSeve = ({ id, index }: any) => {
-    console.log(index, updateTodo);
     editTodoLocalStroge({ id, index, updateTodo });
   };
 
   const handleDeleteTodo = (id: any) => {
-    const x = totoList.filter((item: InitialStateType) => item.id !== id);
-    setTodoList(x);
+    const withOutDeleteItem = totoList.filter((item: InitialStateType) => item.id !== id);
+    setTodoList(withOutDeleteItem);
     deleteTodoLocalstoge(id);
   };
 
   const handleEditTodo = (id: any) => {
     if (id) {
       setSelectedItemId(id);
-      setEditTodo(false);
     }
   };
-
-  // const handle = () =>{
-  //   setEditTodo(true)
-  //   console.log("first")
-  // }
 
   return (
     <div className="todos__lists">
@@ -64,8 +63,9 @@ const TodoTable = () => {
         }: any) => {
           return (
             <div key={id} className="todos__lists_item">
-              {/* -------------- Left Side */}
+              {/* ------------------------------ Left Side */}
               <div className="left_side">
+                {/* ------------- Title */}
                 <div
                   style={{
                     display:
@@ -78,11 +78,13 @@ const TodoTable = () => {
                   <input
                     type="text"
                     name="title"
+                    readOnly={selectedItemId !== id ? true : false}
                     defaultValue={title}
                     onChange={(e) => handleUpdateTodoValue(e)}
                     onBlur={() => handleUpdateTodoSeve(id)}
                   />
                 </div>
+                {/*-------------- Detalis */}
                 <div
                   style={{
                     display:
@@ -93,14 +95,15 @@ const TodoTable = () => {
                 >
                   <label htmlFor="">Details</label>
                   <textarea
-                    // type="text"
                     name="drescriotion"
+                    readOnly={selectedItemId !== id ? true : false}
                     defaultValue={drescriotion}
                     onChange={(e) => handleUpdateTodoValue(e)}
                     onBlur={() => handleUpdateTodoSeve(id)}
                   />
                 </div>
                 <div className="date_wapper">
+                  {/* ------------- Start Date */}
                   <div
                     style={{
                       display:
@@ -114,7 +117,7 @@ const TodoTable = () => {
                       <input
                         type="text"
                         name="startDate"
-                        readOnly={editTodo}
+                        readOnly={selectedItemId !== id ? true : false}
                         defaultValue={fullStartDate?.startDate}
                         onChange={(e) => handleUpdateTodoValue(e)}
                         onBlur={() => handleUpdateTodoSeve(id)}
@@ -122,6 +125,7 @@ const TodoTable = () => {
                       <input
                         type="text"
                         name="startMonth"
+                        readOnly={selectedItemId !== id ? true : false}
                         defaultValue={fullStartDate?.startMonth}
                         onChange={(e) => handleUpdateTodoValue(e)}
                         onBlur={() => handleUpdateTodoSeve(id)}
@@ -129,6 +133,7 @@ const TodoTable = () => {
                       <input
                         type="text"
                         name="startYear"
+                        readOnly={selectedItemId !== id ? true : false}
                         defaultValue={fullStartDate?.startYear}
                         onChange={(e) => handleUpdateTodoValue(e)}
                         onBlur={() => handleUpdateTodoSeve(id)}
@@ -149,6 +154,7 @@ const TodoTable = () => {
                       <input
                         type="text"
                         name="endDate"
+                        readOnly={selectedItemId !== id ? true : false}
                         defaultValue={fullEndDate?.endDate}
                         onChange={(e) => handleUpdateTodoValue(e)}
                         onBlur={() => handleUpdateTodoSeve(id)}
@@ -156,6 +162,7 @@ const TodoTable = () => {
                       <input
                         type="text"
                         name="endMonth"
+                        readOnly={selectedItemId !== id ? true : false}
                         defaultValue={fullEndDate?.endMonth}
                         onChange={(e) => handleUpdateTodoValue(e)}
                         onBlur={() => handleUpdateTodoSeve(id)}
@@ -163,6 +170,7 @@ const TodoTable = () => {
                       <input
                         type="text"
                         name="endYear"
+                        readOnly={selectedItemId !== id ? true : false}
                         defaultValue={fullEndDate?.endYear}
                         onChange={(e) => handleUpdateTodoValue(e)}
                         onBlur={() => handleUpdateTodoSeve(id)}
@@ -170,6 +178,7 @@ const TodoTable = () => {
                     </div>
                   </div>
                 </div>
+                {/* --------------Tags */}
                 <div
                   className="tag_wapper"
                   style={{
@@ -187,6 +196,7 @@ const TodoTable = () => {
                           <input
                             type="text"
                             name={index}
+                            readOnly={selectedItemId !== id ? true : false}
                             defaultValue={tag}
                             onChange={(e) => handleUpdateTodoValue(e)}
                             onBlur={() =>
@@ -200,10 +210,14 @@ const TodoTable = () => {
                   </div>
                 </div>
               </div>
-              {/* --------------- Right Side */}
+              {/* ----------------------------- Right Side */}
               <div className="right_side">
-                <button onClick={() => handleDeleteTodo(id)}>Delete</button>
-                <button onClick={() => handleEditTodo(id)}>Edit</button>
+                <button onClick={() => handleDeleteTodo(id)}>
+                  <img src={deleteButton} />
+                </button>
+                <button onClick={() => handleEditTodo(id)}>
+                  <img src={editButton} />
+                </button>
               </div>
             </div>
           );
