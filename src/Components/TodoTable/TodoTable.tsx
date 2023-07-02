@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   deleteTodoLocalstoge,
   editTodoLocalStroge,
@@ -10,7 +10,7 @@ import { InitialStateType } from "../../Utilits/types";
 
 import deleteButton from "../../assets/icons/delete.png";
 import editButton from "../../assets/icons/editing.png";
-import closeEditButton from "../../assets/icons/close.png";
+
 
 const TodoTable = () => {
   const [totoList, setTodoList] = useState([]);
@@ -26,7 +26,7 @@ const TodoTable = () => {
     setTodoList(todos || todoTitems);
   }, [todoTitems]);
 
-  
+
   const handleUpdateTodoValue = (e: any) => {
     setUpdateTodo({ [e.target.name]: e.target.value });
   };

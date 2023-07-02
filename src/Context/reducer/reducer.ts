@@ -1,5 +1,4 @@
 import { InitialStateType } from "../../Utilits/types";
-import useDate from "../../hooks/useDate";
 import { actionTypes } from "../actionTypes/actionTypes";
 
 export const initialState = {

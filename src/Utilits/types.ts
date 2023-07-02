@@ -9,7 +9,7 @@ export type TodoType = {
 export type InitialStateType = {
   id: String;
   title: String;
-  tagInput: String;
+  tagInput: any;
   tags: String[];
   drescriotion: String;
   startDate: String;
