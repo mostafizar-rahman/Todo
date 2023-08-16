@@ -1,0 +1,9 @@
+$--main-color: #502379;
+$--primery-color: #ffffff;
+$--hover-color: #391957;
+
+@mixin flex_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,11 +1,11 @@
-import Todo from '../Todo/Todo'
+import Todo from '../AddTodo/AddTodo'
 import "./Todos.css"
 import TodoTable from '../TodoTable/TodoTable'
 const Todos = () => {
   return (
     <div>
      
-      <Todo/>
+      {/* <Todo/> */}
       <TodoTable/>
     </div>
   )

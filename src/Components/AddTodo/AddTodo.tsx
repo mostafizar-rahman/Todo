@@ -1,10 +1,12 @@
 import React, { useContext, useState, useRef, useEffect } from "react";
-import "./Todo.scss";
 import { todoLocalStrogeSetItem } from "../../Utilits/localstroge";
 import { TOTO_CONTEXT } from "../../Context/TodoProvider/TodoProvider";
 import { actionTypes } from "../../Context/actionTypes/actionTypes";
 import useDate from "../../hooks/useDate";
-const Todo = () => {
+import { AiOutlineClose } from "react-icons/ai";
+import "./AddTodo.scss";
+
+const AddTodo = () => {
   const formRef = useRef<any>();
   const tagesRef = useRef<any>();
   const { state, dispatch } = useContext(TOTO_CONTEXT);
@@ -46,7 +48,6 @@ const Todo = () => {
   // console.log(newTags)
   return (
     <div className="todo__container">
-       <h3 className='title'>ToDo</h3>
       <form onSubmit={handleTodoSubmit} ref={formRef}>
         <label htmlFor="title">Title</label>
         <input
@@ -71,7 +72,7 @@ const Todo = () => {
               <div key={id} className="tag" ref={tagesRef}>
                 {tag}
                 <button type="button" className="button">
-                  x
+                  <AiOutlineClose />
                 </button>
               </div>
             );
@@ -173,6 +174,13 @@ const Todo = () => {
             </div>
           </div>
         </div>
+        <label htmlFor="status">Status</label>
+        <select name="" id="status">
+          <option value="open">Open</option>
+          <option value="working">Working</option>
+          <option value="close">Close</option>
+        </select>
+
         <div>
           <i>{state.error}</i>
         </div>
@@ -189,4 +197,4 @@ const Todo = () => {
   );
 };
 
-export default Todo;
+export default AddTodo;

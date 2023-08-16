@@ -1,3 +1,5 @@
+@import '../../global.scss';
+
 .todos__lists {
   max-width: 100rem;
   margin: auto;
@@ -14,30 +16,29 @@
   // ------------ Todo item
   &_item {
     width: 48%;
-    padding: 1rem;
-    border-radius: 1rem;
-    box-shadow: 0px 0px 9px 4px rgba($color: #000000, $alpha: 0.5);
+    padding: 2rem 2rem;
+    border-radius: 0.3rem;
+    box-shadow: 0px 0px 2px 1px rgba($color: #000000, $alpha: 0.5);
     align-self: baseline;
 
     // transition: all 0.5s;
     // ----------- Left Side
-    .left_side {
-      label {
-        margin-top: 2rem;
-        display: block;
-      }
-      input,
-      textarea {
-        border: none;
-        width: 100%;
-        background-color: #e3eef8;
-        border-radius: 0.5rem;
-        padding: 1rem;
-        outline: none;
-      }
-      textarea {
-        min-height: 10rem;
-      }
+    label {
+      display: block;
+      margin-top: 1rem;
+    }
+    input,
+    textarea {
+      border: none;
+      width: 100%;
+      background-color: transparent;
+      border-radius: 0.3rem;
+      border: 0.1rem solid #dddddd;
+      padding: 1rem;
+      outline: none;
+    }
+    textarea {
+      min-height: 10rem;
     }
 
     .date_wapper {
@@ -48,17 +49,12 @@
         display: flex;
       }
 
-      div:first-child {
-        margin-right: 3rem;
+      .end_date {
+        margin-left: 3rem;
       }
-
       input {
-        color: #000;
-        background-color: #e3eef8;
         margin-left: 1rem;
-        padding: 0.3rem 0;
         text-align: center;
-        width: 100%;
         &:first-child {
           margin-left: 0;
         }
@@ -74,7 +70,8 @@
       .tag {
         input {
           min-width: 4rem;
-          background-color: gold;
+          background-color: $--main-color;
+          color: $--primery-color;
           display: inline;
           max-height: 1rem;
           text-align: center;
@@ -106,14 +103,15 @@
       // display: block;
       visibility: visible;
       height: auto;
-      background-color: #e3eef8;
+      background-color: transparent;
+      border: 0.1rem solid #dddddd;
       margin-left: 1rem;
       // transition: all 1s;
     }
   }
 }
 
-@media (max-width: 550px){
+@media (max-width: 550px) {
   .todos__lists {
     // ------------ Todo item
     &_item {

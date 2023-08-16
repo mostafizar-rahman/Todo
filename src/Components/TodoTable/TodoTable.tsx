@@ -11,7 +11,6 @@ import { InitialStateType } from "../../Utilits/types";
 import deleteButton from "../../assets/icons/delete.png";
 import editButton from "../../assets/icons/editing.png";
 
-
 const TodoTable = () => {
   const [totoList, setTodoList] = useState([]);
   const [selectedItemId, setSelectedItemId] = useState(null);
@@ -26,7 +25,6 @@ const TodoTable = () => {
     setTodoList(todos || todoTitems);
   }, [todoTitems]);
 
-
   const handleUpdateTodoValue = (e: any) => {
     setUpdateTodo({ [e.target.name]: e.target.value });
   };
@@ -39,7 +37,9 @@ const TodoTable = () => {
   };
 
   const handleDeleteTodo = (id: any) => {
-    const withOutDeleteItem = totoList.filter((item: InitialStateType) => item.id !== id);
+    const withOutDeleteItem = totoList.filter(
+      (item: InitialStateType) => item.id !== id
+    );
     setTodoList(withOutDeleteItem);
     deleteTodoLocalstoge(id);
   };
@@ -64,7 +64,7 @@ const TodoTable = () => {
           return (
             <div key={id} className="todos__lists_item">
               {/* ------------------------------ Left Side */}
-              <div className="left_side">
+              <div>
                 {/* ------------- Title */}
                 <div
                   style={{
@@ -142,6 +142,7 @@ const TodoTable = () => {
                   </div>
                   {/* --------End Date */}
                   <div
+                    className="end_date"
                     style={{
                       display:
                         !(selectedItemId === id) && !fullEndDate.endDate
@@ -150,7 +151,7 @@ const TodoTable = () => {
                     }}
                   >
                     <label htmlFor="">End Date</label>
-                    <div className="date">
+                    <div className="date ">
                       <input
                         type="text"
                         name="endDate"
