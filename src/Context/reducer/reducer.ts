@@ -2,26 +2,15 @@ import { InitialStateType } from "../../Utilits/types";
 import { actionTypes } from "../actionTypes/actionTypes";
 
 export const initialState = {
-  id: "",
-  title: "",
-  drescriotion: "",
-  tagInput: "",
-  tags: [],
-  startDate: "",
-  startMonth: "",
-  startYear: "",
-  endDate: "",
-  endMonth: "",
-  endYear: "",
-  error: "",
   todoTitems: [],
 };
-
+console.log(initialState)
 type ActionTypes = {
   paylod: String;
   type: "ADDTODO" | "STARTDATE" | "STARTMONTH" | "STARTYEARS";
 };
 
+// ---- get today data,  month and day with 2 digit number
 const getDate = new Date();
 const defaultDate =
   (getDate.getDate() + 1).toString().length < 2
@@ -33,32 +22,10 @@ const defaultMonth =
     : getDate.getMonth() + 1;
 const defaultYear = getDate.getFullYear().toString();
 
-console.log(defaultMonth);
+
 export const reducer = (state: InitialStateType, action: ActionTypes) => {
   console.log(action.paylod);
   switch (action.type) {
-    case actionTypes.TITLE:
-      return { ...state, title: action.paylod };
-    case actionTypes.DETAILS:
-      return { ...state, drescriotion: action.paylod };
-
-    case actionTypes.TAG_INPUT:
-      return {
-        ...state,
-        tagInput: action.paylod,
-      };
-    case actionTypes.TAGS:
-      const trimmedInput = state.tagInput.trim();
-      if (action.paylod === " " && !state.tags.includes(trimmedInput)) {
-        return {
-          ...state,
-          tags: [...state.tags, state.tagInput],
-          tagInput: "",
-        };
-      } else {
-        return state;
-      }
-
     // --------------Start Date functionlity and error hindling
     case actionTypes.STARTDATE:
       if (action.paylod.length === 1) {
@@ -172,11 +139,7 @@ export const reducer = (state: InitialStateType, action: ActionTypes) => {
         ...state,
         todoTitems: [...state.todoTitems, action.paylod],
       };
-    case actionTypes.ADDTODO:
-      return {
-        ...state,
-        tags: [],
-      };
+
     default:
       throw new Error();
   }

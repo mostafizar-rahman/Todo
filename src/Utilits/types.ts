@@ -3,7 +3,9 @@ export type TodoType = {
   title: String;
   drescriotion: String;
   fullStartDate: {};
+  fullEndDate: {};
   tags: String[];
+  status: string
 };
 
 export type InitialStateType = {

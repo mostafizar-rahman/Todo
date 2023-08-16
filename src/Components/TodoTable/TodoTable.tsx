@@ -13,7 +13,10 @@ import editButton from "../../assets/icons/editing.png";
 
 const TodoTable = () => {
   const [totoList, setTodoList] = useState([]);
-  const [selectedItemId, setSelectedItemId] = useState(null);
+  const [editSelectedItem, setEditSelectedItem] = useState({
+    id: "",
+    name: "",
+  });
   const [updateTodo, setUpdateTodo] = useState({} as any);
   const { state } = useContext(TOTO_CONTEXT);
   const { todoTitems } = state;
@@ -44,187 +47,281 @@ const TodoTable = () => {
     deleteTodoLocalstoge(id);
   };
 
-  const handleEditTodo = (id: any) => {
+  // -------
+  const handleEditTodo = (id: string, e: any) => {
+    const name = e.target.name;
     if (id) {
-      setSelectedItemId(id);
+      setEditSelectedItem({ id, name });
     }
   };
 
   return (
-    <div className="todos__lists">
-      {totoList?.map(
-        ({
-          id,
-          title,
-          drescriotion,
-          fullStartDate,
-          fullEndDate,
-          tags,
-        }: any) => {
-          return (
-            <div key={id} className="todos__lists_item">
-              {/* ------------------------------ Left Side */}
-              <div>
-                {/* ------------- Title */}
-                <div
-                  style={{
-                    display:
-                      !(selectedItemId === id) && !title.length
-                        ? " none"
-                        : "block",
-                  }}
-                >
-                  <label htmlFor="title">Title</label>
-                  <input
-                    type="text"
-                    name="title"
-                    readOnly={selectedItemId !== id ? true : false}
-                    defaultValue={title}
-                    onChange={(e) => handleUpdateTodoValue(e)}
-                    onBlur={() => handleUpdateTodoSeve(id)}
-                  />
-                </div>
-                {/*-------------- Detalis */}
-                <div
-                  style={{
-                    display:
-                      !(selectedItemId === id) && !drescriotion.length
-                        ? " none"
-                        : "block",
-                  }}
-                >
-                  <label htmlFor="">Details</label>
-                  <textarea
-                    name="drescriotion"
-                    readOnly={selectedItemId !== id ? true : false}
-                    defaultValue={drescriotion}
-                    onChange={(e) => handleUpdateTodoValue(e)}
-                    onBlur={() => handleUpdateTodoSeve(id)}
-                  />
-                </div>
-                <div className="date_wapper">
-                  {/* ------------- Start Date */}
-                  <div
-                    style={{
-                      display:
-                        !(selectedItemId === id) && !fullStartDate.startDate
-                          ? " none"
-                          : "block",
-                    }}
-                  >
-                    <label htmlFor="">Start Date</label>
-                    <div className="date">
+    <>
+      {todoTitems.length ? (
+        <div className="todos__lists">
+          {totoList?.map(
+            ({
+              id,
+              title,
+              drescriotion,
+              fullStartDate,
+              fullEndDate,
+              tags,
+              status,
+            }: any) => {
+              return (
+                <div key={id} className="todos__lists_item">
+                  {/* ------ Header */}
+                  <div className="Header">
+                    {/* ------------- Start Date */}
+                    <div>
+                      <label htmlFor="">Start Date</label>
+                      <div className="date">
+                        <input
+                          style={{
+                            border:
+                              editSelectedItem.id === id &&
+                              editSelectedItem.name === "startDate"
+                                ? "1px solid #dddddd"
+                                : "0px",
+                          }}
+                          type="text"
+                          name="startDate"
+                          readOnly={
+                            editSelectedItem.id === id &&
+                            editSelectedItem.name === "startDate"
+                              ? false
+                              : true
+                          }
+                          defaultValue={fullStartDate?.startDate}
+                          onChange={(e) => handleUpdateTodoValue(e)}
+                          onBlur={() => handleUpdateTodoSeve(id)}
+                          onDoubleClick={(e) => handleEditTodo(id, e)}
+                        />
+                        <input
+                          style={{
+                            border:
+                              editSelectedItem.id === id &&
+                              editSelectedItem.name === "startMonth"
+                                ? "1px solid #dddddd"
+                                : "0px",
+                          }}
+                          type="text"
+                          name="startMonth"
+                          readOnly={
+                            editSelectedItem.id === id &&
+                            editSelectedItem.name === "startMonth"
+                              ? false
+                              : true
+                          }
+                          defaultValue={fullStartDate?.startMonth}
+                          onChange={(e) => handleUpdateTodoValue(e)}
+                          onBlur={() => handleUpdateTodoSeve(id)}
+                          onDoubleClick={(e) => handleEditTodo(id, e)}
+                        />
+                        <input
+                          style={{
+                            border:
+                              editSelectedItem.id === id &&
+                              editSelectedItem.name === "startYear"
+                                ? "1px solid #dddddd"
+                                : "0px",
+                          }}
+                          type="text"
+                          name="startYear"
+                          readOnly={
+                            editSelectedItem.id === id &&
+                            editSelectedItem.name === "startYear"
+                              ? false
+                              : true
+                          }
+                          defaultValue={fullStartDate?.startYear}
+                          onChange={(e) => handleUpdateTodoValue(e)}
+                          onBlur={() => handleUpdateTodoSeve(id)}
+                          onDoubleClick={(e) => handleEditTodo(id, e)}
+                        />
+                      </div>
+                    </div>
+                    {/* --------End Date */}
+                    <div className="end_date">
+                      <label htmlFor="">End Date</label>
+                      <div className="date ">
+                        <input
+                          style={{
+                            border:
+                              editSelectedItem.id === id &&
+                              editSelectedItem.name === "endDate"
+                                ? "1px solid #dddddd"
+                                : "0px",
+                          }}
+                          type="text"
+                          name="endDate"
+                          readOnly={
+                            editSelectedItem.id === id &&
+                            editSelectedItem.name === "endDate"
+                              ? false
+                              : true
+                          }
+                          defaultValue={fullEndDate?.endDate}
+                          onChange={(e) => handleUpdateTodoValue(e)}
+                          onBlur={() => handleUpdateTodoSeve(id)}
+                          onDoubleClick={(e) => handleEditTodo(id, e)}
+                        />
+                        <input
+                          style={{
+                            border:
+                              editSelectedItem.id === id &&
+                              editSelectedItem.name === "endMonth"
+                                ? "1px solid #dddddd"
+                                : "0px",
+                          }}
+                          type="text"
+                          name="endMonth"
+                          readOnly={
+                            editSelectedItem.id === id &&
+                            editSelectedItem.name === "endMonth"
+                              ? false
+                              : true
+                          }
+                          defaultValue={fullEndDate?.endMonth}
+                          onChange={(e) => handleUpdateTodoValue(e)}
+                          onBlur={() => handleUpdateTodoSeve(id)}
+                          onDoubleClick={(e) => handleEditTodo(id, e)}
+                        />
+                        <input
+                          style={{
+                            border:
+                              editSelectedItem.id === id &&
+                              editSelectedItem.name === "endYear"
+                                ? "1px solid #dddddd"
+                                : "0px",
+                          }}
+                          type="text"
+                          name="endYear"
+                          readOnly={
+                            editSelectedItem.id === id &&
+                            editSelectedItem.name === "endYear"
+                              ? false
+                              : true
+                          }
+                          defaultValue={fullEndDate?.endYear}
+                          onChange={(e) => handleUpdateTodoValue(e)}
+                          onBlur={() => handleUpdateTodoSeve(id)}
+                          onDoubleClick={(e) => handleEditTodo(id, e)}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label htmlFor="">Status</label>
                       <input
                         type="text"
-                        name="startDate"
-                        readOnly={selectedItemId !== id ? true : false}
-                        defaultValue={fullStartDate?.startDate}
-                        onChange={(e) => handleUpdateTodoValue(e)}
-                        onBlur={() => handleUpdateTodoSeve(id)}
-                      />
-                      <input
-                        type="text"
-                        name="startMonth"
-                        readOnly={selectedItemId !== id ? true : false}
-                        defaultValue={fullStartDate?.startMonth}
-                        onChange={(e) => handleUpdateTodoValue(e)}
-                        onBlur={() => handleUpdateTodoSeve(id)}
-                      />
-                      <input
-                        type="text"
-                        name="startYear"
-                        readOnly={selectedItemId !== id ? true : false}
-                        defaultValue={fullStartDate?.startYear}
+                        name="status"
+                        defaultValue={status}
                         onChange={(e) => handleUpdateTodoValue(e)}
                         onBlur={() => handleUpdateTodoSeve(id)}
                       />
                     </div>
                   </div>
-                  {/* --------End Date */}
-                  <div
-                    className="end_date"
-                    style={{
-                      display:
-                        !(selectedItemId === id) && !fullEndDate.endDate
-                          ? " none"
-                          : "block",
-                    }}
-                  >
-                    <label htmlFor="">End Date</label>
-                    <div className="date ">
+
+                  {/* ------------- Center */}
+                  <div className="center">
+                    <div>
                       <input
+                        style={{
+                          border:
+                            editSelectedItem.id === id &&
+                            editSelectedItem.name === "title"
+                              ? "1px solid #dddddd"
+                              : "0px",
+                        }}
+                        className="title"
                         type="text"
-                        name="endDate"
-                        readOnly={selectedItemId !== id ? true : false}
-                        defaultValue={fullEndDate?.endDate}
+                        name="title"
+                        readOnly={
+                          editSelectedItem.id === id &&
+                          editSelectedItem.name === "title"
+                            ? false
+                            : true
+                        }
+                        defaultValue={title}
                         onChange={(e) => handleUpdateTodoValue(e)}
                         onBlur={() => handleUpdateTodoSeve(id)}
+                        onDoubleClick={(e) => handleEditTodo(id, e)}
                       />
-                      <input
-                        type="text"
-                        name="endMonth"
-                        readOnly={selectedItemId !== id ? true : false}
-                        defaultValue={fullEndDate?.endMonth}
+                    </div>
+
+                    <div>
+                      <textarea
+                        style={{
+                          border:
+                            editSelectedItem.id === id &&
+                            editSelectedItem.name === "drescriotion"
+                              ? "1px solid #dddddd"
+                              : "0px",
+                        }}
+                        name="drescriotion"
+                        readOnly={
+                          editSelectedItem.id === id &&
+                          editSelectedItem.name === "drescriotion"
+                            ? false
+                            : true
+                        }
+                        defaultValue={drescriotion}
                         onChange={(e) => handleUpdateTodoValue(e)}
                         onBlur={() => handleUpdateTodoSeve(id)}
-                      />
-                      <input
-                        type="text"
-                        name="endYear"
-                        readOnly={selectedItemId !== id ? true : false}
-                        defaultValue={fullEndDate?.endYear}
-                        onChange={(e) => handleUpdateTodoValue(e)}
-                        onBlur={() => handleUpdateTodoSeve(id)}
+                        onDoubleClick={(e) => handleEditTodo(id, e)}
                       />
                     </div>
                   </div>
-                </div>
-                {/* --------------Tags */}
-                <div
-                  className="tag_wapper"
-                  style={{
-                    display:
-                      !(selectedItemId === id) && !tags.length
-                        ? " none"
-                        : "block",
-                  }}
-                >
-                  <label htmlFor="">Tags</label>
-                  <div>
-                    {tags?.map((tag: any, index: any) => {
-                      return (
-                        <div key={index} className="tag">
-                          <input
-                            type="text"
-                            name={index}
-                            readOnly={selectedItemId !== id ? true : false}
-                            defaultValue={tag}
-                            onChange={(e) => handleUpdateTodoValue(e)}
-                            onBlur={() =>
-                              handleUpdateTodoTagSeve({ id, index })
-                            }
-                            style={{ width: `${tag?.length}ch` }}
-                          />
-                        </div>
-                      );
-                    })}
+                  {/* --------------Footer */}
+                  <div className="footer">
+                    <div>
+                      <div>
+                        {tags?.map((tag: any, index: any) => {
+                          return (
+                            <div key={index} className="tag">
+                              <input
+                                type="text"
+                                name={index}
+                                readOnly={
+                                  editSelectedItem !== id ? true : false
+                                }
+                                defaultValue={tag}
+                                onChange={(e) => handleUpdateTodoValue(e)}
+                                onBlur={() =>
+                                  handleUpdateTodoTagSeve({ id, index })
+                                }
+                                style={{ width: `${tag?.length}ch` }}
+                              />
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    <div className="icon">
+                      <button onClick={() => handleDeleteTodo(id)}>
+                        <img src={deleteButton} />
+                      </button>
+                      {/* <button onClick={() => handleEditTodo(id)}>
+                    <img src={editButton} />
+                  </button> */}
+                    </div>
                   </div>
                 </div>
-              </div>
-              {/* ----------------------------- Right Side */}
-              <div className="right_side">
-                <button onClick={() => handleDeleteTodo(id)}>
-                  <img src={deleteButton} />
-                </button>
-                <button onClick={() => handleEditTodo(id)}>
-                  <img src={editButton} />
-                </button>
-              </div>
-            </div>
-          );
-        }
+              );
+            }
+          )}
+        </div>
+      ) : (
+        <div className="doc">
+          <h5>How can you use this app</h5>
+          <ul>
+            <li>You will see a icon in bottom right click heare</li>
+          </ul>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

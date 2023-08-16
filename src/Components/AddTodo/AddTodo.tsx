@@ -1,8 +1,7 @@
-import React, { useContext, useState, useRef, useEffect } from "react";
+import React, { useContext, useState, useRef } from "react";
 import { todoLocalStrogeSetItem } from "../../Utilits/localstroge";
 import { TOTO_CONTEXT } from "../../Context/TodoProvider/TodoProvider";
 import { actionTypes } from "../../Context/actionTypes/actionTypes";
-import useDate from "../../hooks/useDate";
 import { AiOutlineClose } from "react-icons/ai";
 import "./AddTodo.scss";
 
@@ -10,68 +9,104 @@ const AddTodo = () => {
   const formRef = useRef<any>();
   const tagesRef = useRef<any>();
   const { state, dispatch } = useContext(TOTO_CONTEXT);
-  const { title, drescriotion, tags, tagInput, endDate, endMonth, endYear } =
-    state;
-  const [newTags, setNewTags] = useState([] as any);
-  const { fullStartDate } = useDate();
-  const fullEndDate = {
-    endDate,
-    endMonth,
-    endYear,
+
+  const [info, setInfo] = useState({
+    title: "",
+    drescriotion: "",
+    startDate: "",
+    startMonth: "",
+    startYear: "",
+    endDate: "",
+    endMonth: "",
+    endYear: "",
+    status:""
+  });
+  const [tags, setTags] = useState([] as any);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    console.log(name)
+    console.log(value)
+    setInfo({ ...info, [name]: value });
   };
 
-  useEffect(() => {
-    setNewTags(tags);
-  }, [tags]);
+  // ----- Tag push an array
+  const handleKeuDownTag = (e: any) => {
+    if (e.key !== "Enter") return;
+    const value = e.target.value;
+    if (!value.trim()) return;
+    setTags([...tags, value]);
+    e.target.value = "";
+  };
 
+  // ----- Remove Tag
+  function handleRemoveTag(index: number) {
+    setTags(tags.filter((_: any, i: number) => i !== index));
+  }
+
+  // ------ Form submit
   const handleTodoSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // --- Id generate
     const id = Math.random()
       .toString(36)
       .substring(2, length + 10);
+
+    // --- all todo item
     const todoItem = {
       id,
-      title,
-      drescriotion,
-      fullStartDate,
-      fullEndDate,
+      title: info.title,
+      fullStartDate: {
+        startDate: info.startDate,
+        startMonth: info.startMonth,
+        startYear: info.startYear,
+      },
+      fullEndDate: {
+        endDate: info.endDate,
+        endMonth: info.endMonth,
+        endYear: info.endYear,
+      },
+      drescriotion: info.drescriotion,
+      status: info.status,
       tags,
     };
-    console.log(todoItem);
-    dispatch({ type: actionTypes.ADD_TODO_ITEMS, paylod: todoItem });
-    dispatch({ type: actionTypes.ADDTODO });
+    // ---- Todo items set localstroge
     todoLocalStrogeSetItem(todoItem);
+    // ---- Todo item display instence
+    dispatch({ type: actionTypes.ADD_TODO_ITEMS, paylod: todoItem });
+    // --- Clear form
     formRef.current.reset();
-    // setNewTags([]);
-    // tags.length = 0
+    setTags([]);
   };
   // console.log(newTags)
+
   return (
     <div className="todo__container">
       <form onSubmit={handleTodoSubmit} ref={formRef}>
         <label htmlFor="title">Title</label>
-        <input
-          placeholder="Title"
-          name="title"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            dispatch({ type: actionTypes.TITLE, paylod: e.target.value })
-          }
-        />
-        <label htmlFor="details">Details</label>
+        <input placeholder="Title" name="title" onChange={handleChange} />
+        <label htmlFor="drescriotion">Details</label>
         <textarea
           placeholder="Details"
-          name="details"
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-            dispatch({ type: actionTypes.DETAILS, paylod: e.target.value })
-          }
+          name="drescriotion"
+          id="drescriotion"
+          onChange={handleChange}
         />
+        {/* --- Tags */}
         <label htmlFor="">Tags</label>
-        <div className="tag_wapper">
-          {newTags.map((tag: any, id: any) => {
+        <div className="tag_wapper" ref={tagesRef}>
+          {tags.map((tag: any, index: any) => {
             return (
-              <div key={id} className="tag" ref={tagesRef}>
+              <div key={index} className="tag">
                 {tag}
-                <button type="button" className="button">
+                <button
+                  type="button"
+                  className="button"
+                  onClick={() => handleRemoveTag(index)}
+                >
                   <AiOutlineClose />
                 </button>
               </div>
@@ -79,56 +114,38 @@ const AddTodo = () => {
           })}
 
           <textarea
-            value={tagInput}
+            // value={tags}
             placeholder="Tags"
-            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-              dispatch({ type: actionTypes.TAG_INPUT, paylod: e.target.value })
-            }
-            onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) =>
-              dispatch({ type: actionTypes.TAGS, paylod: e.key })
-            }
+            name="tag"
+            onKeyDown={handleKeuDownTag}
           />
         </div>
+        {/* --- Date */}
         <div className="date_wapper">
           <div>
             <label htmlFor="">Start Date</label>
             <div className="field_group">
               <input
                 type="text"
-                name=""
+                name="startDate"
                 id=""
                 placeholder="Date"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  dispatch({
-                    paylod: e.target.value,
-                    type: actionTypes.STARTDATE,
-                  })
-                }
+                onChange={handleChange}
               />
 
               <input
                 type="text"
-                name=""
+                name="startMonth"
                 id=""
                 placeholder="Month"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  dispatch({
-                    paylod: e.target.value,
-                    type: actionTypes.STARTMONTH,
-                  })
-                }
+                onChange={handleChange}
               />
               <input
                 type="text"
-                name=""
+                name="startYear"
                 id=""
                 placeholder="Year"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  dispatch({
-                    paylod: e.target.value,
-                    type: actionTypes.STARTYEARS,
-                  })
-                }
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -137,53 +154,36 @@ const AddTodo = () => {
             <div className="field_group">
               <input
                 type="text"
-                name=""
+                name="endDate"
                 id=""
                 placeholder="Date"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  dispatch({
-                    paylod: e.target.value,
-                    type: actionTypes.END_DATE,
-                  })
-                }
+                onChange={handleChange}
               />
               <input
                 type="text"
-                name=""
+                name="endMonth"
                 id=""
                 placeholder="Month"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  dispatch({
-                    paylod: e.target.value,
-                    type: actionTypes.END_MONTH,
-                  })
-                }
+                onChange={handleChange}
               />
               <input
                 type="text"
-                name=""
+                name="endYear"
                 id=""
                 placeholder="Year"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  dispatch({
-                    paylod: e.target.value,
-                    type: actionTypes.END_YEAR,
-                  })
-                }
+                onChange={handleChange}
               />
             </div>
           </div>
         </div>
         <label htmlFor="status">Status</label>
-        <select name="" id="status">
+        <select name="status" id="status"  onChange={handleChange}>
           <option value="open">Open</option>
           <option value="working">Working</option>
           <option value="close">Close</option>
         </select>
 
-        <div>
-          <i>{state.error}</i>
-        </div>
+        <div>{/* <i>{state.error}</i> */}</div>
 
         <button
           type="submit"

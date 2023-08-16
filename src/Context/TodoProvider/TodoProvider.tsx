@@ -2,8 +2,8 @@ import React, { createContext, useReducer } from "react";
 import { initialState, reducer } from "../reducer/reducer";
 import { InitialStateType } from "../../Utilits/types";
 
-type xx = { state: InitialStateType; dispatch: any };
-export const TOTO_CONTEXT = createContext<xx>({} as xx);
+type contextType = { state: InitialStateType; dispatch: any };
+export const TOTO_CONTEXT = createContext<contextType>({} as contextType);
 
 type childrenPropsType = {
   children: React.ReactNode;
