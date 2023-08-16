@@ -5,10 +5,10 @@ export type TodoType = {
   fullStartDate: {};
   fullEndDate: {};
   tags: String[];
-  status: string
+  status: string;
 };
 
 export type InitialStateType = {
 
-  todoTitems:String[]
+  todoTitems: String[];
 };

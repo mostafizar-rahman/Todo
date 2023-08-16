@@ -8,7 +8,7 @@ import "./AddTodo.scss";
 const AddTodo = () => {
   const formRef = useRef<any>();
   const tagesRef = useRef<any>();
-  const { state, dispatch } = useContext(TOTO_CONTEXT);
+  const { dispatch } = useContext(TOTO_CONTEXT);
 
   const [info, setInfo] = useState({
     title: "",

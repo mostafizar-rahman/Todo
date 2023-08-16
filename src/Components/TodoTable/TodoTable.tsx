@@ -6,7 +6,7 @@ import {
 } from "../../Utilits/localstroge";
 import "./TodoTable.scss";
 import { TOTO_CONTEXT } from "../../Context/TodoProvider/TodoProvider";
-import { InitialStateType } from "../../Utilits/types";
+
 
 import deleteButton from "../../assets/icons/delete.png";
 
@@ -44,7 +44,7 @@ const TodoTable = () => {
 
   const handleDeleteTodo = (id: any) => {
     const withOutDeleteItem = totoList.filter(
-      (item: InitialStateType) => item.id !== id
+      (item: any) => item.id !== id
     );
     setTodoList(withOutDeleteItem);
     deleteTodoLocalstoge(id);
