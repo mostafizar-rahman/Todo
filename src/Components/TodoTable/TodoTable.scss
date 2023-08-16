@@ -81,11 +81,9 @@
       background-color: #e7f0f9;
       padding: 1rem 2rem;
       .tag_wapper {
-        div {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 1rem;
-        }
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
 
         .tag {
           input {

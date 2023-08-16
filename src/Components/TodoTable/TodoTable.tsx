@@ -9,7 +9,6 @@ import { TOTO_CONTEXT } from "../../Context/TodoProvider/TodoProvider";
 import { InitialStateType } from "../../Utilits/types";
 
 import deleteButton from "../../assets/icons/delete.png";
-import editButton from "../../assets/icons/editing.png";
 
 const TodoTable = () => {
   const [totoList, setTodoList] = useState([]);
@@ -18,14 +17,21 @@ const TodoTable = () => {
     name: "",
   });
   const [updateTodo, setUpdateTodo] = useState({} as any);
+  const [loading, setLoading] = useState(false);
   const { state } = useContext(TOTO_CONTEXT);
   const { todoTitems } = state;
 
   useEffect(() => {
     const todos = localStorageGetTodo();
-
-    // First time load localstorge todos list then when add a new todo it load on time
-    setTodoList(todos || todoTitems);
+    console.log(todos);
+    if (todos.length) {
+      // First time load localstorge todos list then when add a new todo it load on time
+      setTodoList(todos || todoTitems);
+      setLoading(false);
+    } else {
+      console.log("loading");
+      setLoading(true);
+    }
   }, [todoTitems]);
 
   const handleUpdateTodoValue = (e: any) => {
@@ -34,9 +40,6 @@ const TodoTable = () => {
 
   const handleUpdateTodoSeve = (id: any) => {
     editTodoLocalStroge({ id, updateTodo });
-  };
-  const handleUpdateTodoTagSeve = ({ id, index }: any) => {
-    editTodoLocalStroge({ id, index, updateTodo });
   };
 
   const handleDeleteTodo = (id: any) => {
@@ -55,9 +58,14 @@ const TodoTable = () => {
     }
   };
 
+
   return (
     <>
-      {todoTitems.length ? (
+      {loading ? (
+        <div className="doc">
+          <h5>How To Use this app</h5>
+        </div>
+      ) : (
         <div className="todos__lists">
           {totoList?.map(
             ({
@@ -214,11 +222,25 @@ const TodoTable = () => {
                     <div>
                       <label htmlFor="">Status</label>
                       <input
+                        style={{
+                          border:
+                            editSelectedItem.id === id &&
+                            editSelectedItem.name === "status"
+                              ? "1px solid #dddddd"
+                              : "0px",
+                        }}
                         type="text"
                         name="status"
                         defaultValue={status}
+                        readOnly={
+                          editSelectedItem.id === id &&
+                          editSelectedItem.name === "status"
+                            ? false
+                            : true
+                        }
                         onChange={(e) => handleUpdateTodoValue(e)}
                         onBlur={() => handleUpdateTodoSeve(id)}
+                        onDoubleClick={(e) => handleEditTodo(id, e)}
                       />
                     </div>
                   </div>
@@ -276,21 +298,15 @@ const TodoTable = () => {
                   {/* --------------Footer */}
                   <div className="footer">
                     <div>
-                      <div>
+                      <div className="tag_wapper">
                         {tags?.map((tag: any, index: any) => {
                           return (
                             <div key={index} className="tag">
                               <input
                                 type="text"
                                 name={index}
-                                readOnly={
-                                  editSelectedItem !== id ? true : false
-                                }
+                                readOnly
                                 defaultValue={tag}
-                                onChange={(e) => handleUpdateTodoValue(e)}
-                                onBlur={() =>
-                                  handleUpdateTodoTagSeve({ id, index })
-                                }
                                 style={{ width: `${tag?.length}ch` }}
                               />
                             </div>
@@ -303,22 +319,12 @@ const TodoTable = () => {
                       <button onClick={() => handleDeleteTodo(id)}>
                         <img src={deleteButton} />
                       </button>
-                      {/* <button onClick={() => handleEditTodo(id)}>
-                    <img src={editButton} />
-                  </button> */}
                     </div>
                   </div>
                 </div>
               );
             }
           )}
-        </div>
-      ) : (
-        <div className="doc">
-          <h5>How can you use this app</h5>
-          <ul>
-            <li>You will see a icon in bottom right click heare</li>
-          </ul>
         </div>
       )}
     </>

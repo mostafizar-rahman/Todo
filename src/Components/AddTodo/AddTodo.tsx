@@ -19,7 +19,7 @@ const AddTodo = () => {
     endDate: "",
     endMonth: "",
     endYear: "",
-    status:""
+    status:"Open"
   });
   const [tags, setTags] = useState([] as any);
 
@@ -28,8 +28,6 @@ const AddTodo = () => {
   ) => {
     const name = e.target.name;
     const value = e.target.value;
-    console.log(name)
-    console.log(value)
     setInfo({ ...info, [name]: value });
   };
 
@@ -178,9 +176,9 @@ const AddTodo = () => {
         </div>
         <label htmlFor="status">Status</label>
         <select name="status" id="status"  onChange={handleChange}>
-          <option value="open">Open</option>
-          <option value="working">Working</option>
-          <option value="close">Close</option>
+          <option value="Open">Open</option>
+          <option value="Working">Working</option>
+          <option value="Close">Close</option>
         </select>
 
         <div>{/* <i>{state.error}</i> */}</div>
