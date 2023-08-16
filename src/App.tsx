@@ -17,7 +17,6 @@ const App = () => {
         <AddTodo />
       </div>
       <TodoTable />
-      {/* <Todos /> */}
       <button
         className="app_container__plus_icon"
         onClick={() => setIsTodoFormOpen(!isTodoFormOpen)}

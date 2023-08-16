@@ -9,17 +9,6 @@ export type TodoType = {
 };
 
 export type InitialStateType = {
-  id: String;
-  title: String;
-  tagInput: any;
-  tags: String[];
-  drescriotion: String;
-  startDate: String;
-  startMonth: String;
-  startYear: String;
-  endDate: String;
-  endMonth: String;
-  endYear: String;
-  error: String;
+
   todoTitems:String[]
 };

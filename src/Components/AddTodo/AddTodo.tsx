@@ -186,7 +186,6 @@ const AddTodo = () => {
         <button
           type="submit"
           className="submit_button"
-          disabled={state.error ? true : false}
         >
           Add ToDo
         </button>
