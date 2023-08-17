@@ -4,12 +4,12 @@ import { TOTO_CONTEXT } from "../../Context/TodoProvider/TodoProvider";
 import { actionTypes } from "../../Context/actionTypes/actionTypes";
 import { AiOutlineClose } from "react-icons/ai";
 import "./AddTodo.scss";
+import useDateValidation from "../../Hook/useDateValidation";
 
 const AddTodo = () => {
   const formRef = useRef<any>();
   const tagesRef = useRef<any>();
   const { dispatch } = useContext(TOTO_CONTEXT);
-
   const [info, setInfo] = useState({
     title: "",
     drescriotion: "",
@@ -19,15 +19,19 @@ const AddTodo = () => {
     endDate: "",
     endMonth: "",
     endYear: "",
-    status:"Open"
+    status: "Open",
   });
   const [tags, setTags] = useState([] as any);
+  const error = useDateValidation(info);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     const name = e.target.name;
     const value = e.target.value;
+
     setInfo({ ...info, [name]: value });
   };
 
@@ -79,7 +83,7 @@ const AddTodo = () => {
     formRef.current.reset();
     setTags([]);
   };
-  // console.log(newTags)
+
 
   return (
     <div className="todo__container">
@@ -119,73 +123,76 @@ const AddTodo = () => {
           />
         </div>
         {/* --- Date */}
-        <div className="date_wapper">
-          <div>
-            <label htmlFor="">Start Date</label>
-            <div className="field_group">
-              <input
-                type="text"
-                name="startDate"
-                id=""
-                placeholder="Date"
-                onChange={handleChange}
-              />
+        <div>
+          <div className="date_wapper">
+            <div>
+              <label htmlFor="">Start Date</label>
+              <div className="field_group">
+                <input
+                  type="text"
+                  name="startDate"
+                  id=""
+                  placeholder="Date"
+                  onChange={handleChange}
+                />
 
-              <input
-                type="text"
-                name="startMonth"
-                id=""
-                placeholder="Month"
-                onChange={handleChange}
-              />
-              <input
-                type="text"
-                name="startYear"
-                id=""
-                placeholder="Year"
-                onChange={handleChange}
-              />
+                <input
+                  type="text"
+                  name="startMonth"
+                  id=""
+                  placeholder="Month"
+                  onChange={handleChange}
+                />
+                <input
+                  type="text"
+                  name="startYear"
+                  id=""
+                  placeholder="Year"
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div>
+              <label htmlFor="">End Date</label>
+              <div className="field_group">
+                <input
+                  type="text"
+                  name="endDate"
+                  id=""
+                  placeholder="Date"
+                  onChange={handleChange}
+                />
+                <input
+                  type="text"
+                  name="endMonth"
+                  id=""
+                  placeholder="Month"
+                  onChange={handleChange}
+                />
+                <input
+                  type="text"
+                  name="endYear"
+                  id=""
+                  placeholder="Year"
+                  onChange={handleChange}
+                />
+              </div>
             </div>
           </div>
-          <div>
-            <label htmlFor="">End Date</label>
-            <div className="field_group">
-              <input
-                type="text"
-                name="endDate"
-                id=""
-                placeholder="Date"
-                onChange={handleChange}
-              />
-              <input
-                type="text"
-                name="endMonth"
-                id=""
-                placeholder="Month"
-                onChange={handleChange}
-              />
-              <input
-                type="text"
-                name="endYear"
-                id=""
-                placeholder="Year"
-                onChange={handleChange}
-              />
-            </div>
-          </div>
+          <p className="error">{error}</p>
         </div>
         <label htmlFor="status">Status</label>
-        <select name="status" id="status"  onChange={handleChange}>
+        <select name="status" id="status" onChange={handleChange}>
           <option value="Open">Open</option>
           <option value="Working">Working</option>
           <option value="Close">Close</option>
         </select>
 
-        <div>{/* <i>{state.error}</i> */}</div>
-
         <button
           type="submit"
           className="submit_button"
+          style={{backgroundColor: error ? "gray" : ""}}
+          disabled={error? true : false}
         >
           Add ToDo
         </button>

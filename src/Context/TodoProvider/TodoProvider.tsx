@@ -10,7 +10,6 @@ type childrenPropsType = {
 };
 const TodoProvider = ({ children }: childrenPropsType) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  // console.log(first)
 
   return (
     <TOTO_CONTEXT.Provider value={{ state, dispatch }}>

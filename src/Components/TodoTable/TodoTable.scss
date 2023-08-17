@@ -6,7 +6,23 @@
   padding: 0 3rem;
   h5 {
     font-size: 2rem;
+    margin-bottom: 1rem;
   }
+  ul{
+    margin-bottom: 1rem;
+    b{
+      font-size: 1.7rem;
+    }
+    li{
+      font-size: 1.4rem;
+      list-style: circle;
+      margin-left: 3rem;
+    }
+  }
+  p{
+    font-size: 1.7rem;
+  }
+
 }
 .todos__lists {
   max-width: 100rem;
@@ -19,7 +35,6 @@
   // ------------ Todo item
   &_item {
     flex-basis: 48%;
-    // padding: 2rem 2rem;
     border-radius: 0.3rem;
     box-shadow: 0px 0px 2px 1px rgba($color: #000000, $alpha: 0.5);
     align-self: baseline;

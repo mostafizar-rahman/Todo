@@ -22,11 +22,8 @@ export const editTodoLocalStroge = ({index, id, updateTodo }: any) => {
   const previousTodo = localStorage.getItem("todos");
 
   if (previousTodo) {
-    const xx = JSON.parse(previousTodo);
-    // const toto = [...xx];
-    console.log(updateTodo, "update");
-    for (const iterator of xx) {
-      console.log("under")
+    const data = JSON.parse(previousTodo);
+    for (const iterator of data) {
       if (iterator.id === id) {
         const key: any = Object.keys(updateTodo)[0];
 
@@ -35,7 +32,7 @@ export const editTodoLocalStroge = ({index, id, updateTodo }: any) => {
         iterator.fullEndDate[key] = updateTodo[key];
         iterator.tags[index] = updateTodo[index];
 
-        localStorage.setItem("todos", JSON.stringify([...xx]));
+        localStorage.setItem("todos", JSON.stringify([...data]));
       }
     }
   }

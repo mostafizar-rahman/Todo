@@ -6,8 +6,6 @@ import {
 } from "../../Utilits/localstroge";
 import "./TodoTable.scss";
 import { TOTO_CONTEXT } from "../../Context/TodoProvider/TodoProvider";
-
-
 import deleteButton from "../../assets/icons/delete.png";
 
 const TodoTable = () => {
@@ -23,13 +21,11 @@ const TodoTable = () => {
 
   useEffect(() => {
     const todos = localStorageGetTodo();
-    console.log(todos);
     if (todos.length) {
       // First time load localstorge todos list then when add a new todo it load on time
       setTodoList(todos || todoTitems);
       setLoading(false);
     } else {
-      console.log("loading");
       setLoading(true);
     }
   }, [todoTitems]);
@@ -43,9 +39,7 @@ const TodoTable = () => {
   };
 
   const handleDeleteTodo = (id: any) => {
-    const withOutDeleteItem = totoList.filter(
-      (item: any) => item.id !== id
-    );
+    const withOutDeleteItem = totoList.filter((item: any) => item.id !== id);
     setTodoList(withOutDeleteItem);
     deleteTodoLocalstoge(id);
   };
@@ -58,12 +52,33 @@ const TodoTable = () => {
     }
   };
 
-
   return (
     <>
       {loading ? (
         <div className="doc">
-          <h5>How To Use this app</h5>
+          <h5>How To Use this app?</h5>
+          <ul>
+            <b>Input Todo</b>
+            <li>You will see a button on the bottom right side.</li>
+            <li>Click the button it will show a todo input field popup.</li>
+            <li>
+              Now input your todo. Filling the input field is not mandatory but
+              If you fill date field then you need to go through some
+              validation.
+            </li>
+            <li>
+              Now click on the bottom right side button the popup will be hide.
+            </li>
+          </ul>
+          <ul>
+            <b>Edit Todo</b>
+            <li>Double click on the part you want to edit.</li>
+            <li>Then input the text or number as per your requirement.</li>
+            <li>
+              Now when you click anywhere it will automatically save the list.
+            </li>
+          </ul>
+          <p className="">Thanks For Use The App</p>
         </div>
       ) : (
         <div className="todos__lists">
