@@ -21,6 +21,7 @@ const TodoTable = () => {
 
   useEffect(() => {
     const todos = localStorageGetTodo();
+
     if (todos.length) {
       // First time load localstorge todos list then when add a new todo it load on time
       setTodoList(todos || todoTitems);
@@ -38,6 +39,7 @@ const TodoTable = () => {
     editTodoLocalStroge({ id, updateTodo });
   };
 
+  // ------ Delete todo 
   const handleDeleteTodo = (id: any) => {
     const withOutDeleteItem = totoList.filter((item: any) => item.id !== id);
     setTodoList(withOutDeleteItem);
