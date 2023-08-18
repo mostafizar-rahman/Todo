@@ -22,7 +22,7 @@ const TodoTable = () => {
   useEffect(() => {
     const todos = localStorageGetTodo();
 
-    if (todos.length) {
+    if (todos) {
       // First time load localstorge todos list then when add a new todo it load on time
       setTodoList(todos || todoTitems);
       setLoading(false);
